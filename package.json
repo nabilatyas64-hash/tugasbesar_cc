@@ -1,0 +1,31 @@
+{
+  "name": "pendekin",
+  "version": "1.0.0",
+  "description": "Pendekin - URL shortener + statistik klik",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/dev-server.js",
+    "test": "jest --runInBand",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "ioredis": "^5.11.1",
+    "knex": "^3.3.0",
+    "mysql2": "^3.24.6"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.3.2"
+  }
+}
