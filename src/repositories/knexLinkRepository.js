@@ -14,6 +14,10 @@ class KnexLinkRepository {
     this.db = db;
   }
 
+  async createUser(user) {
+    await this.db('users').insert(user);
+  }
+
   findUserByApiKey(apiKey) {
     return this.db('users').where({ api_key: apiKey }).first();
   }

@@ -10,6 +10,8 @@ class MemoryRepository {
     this.calls = { findByCode: 0 };
   }
 
+  async createUser(user) { this.users.push({ id: this.users.length + 1, ...user }); }
+
   async findUserByApiKey(key) { return this.users.find((u) => u.api_key === key) || null; }
 
   async findByCode(code) {
@@ -26,7 +28,7 @@ class MemoryRepository {
     return link;
   }
 
-  async listByOwner(ownerId) { return this.links.filter((l) => l.owner_id === ownerId); }
+  async listByOwner(ownerId) { return this.links.filter((l) => l.owner_id === ownerId).reverse(); }
 
   async deactivate(id) { this.links.find((l) => l.id === id).is_active = false; }
 

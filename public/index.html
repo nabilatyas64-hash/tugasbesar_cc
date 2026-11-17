@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pendekin – Solusi Tautan Pendek Praktis untuk Bisnis &amp; UMKM</title>
+<meta name="description" content="Aplikasi pemendek tautan cepat, praktis, dan ramah UMKM. Ringkas link produk, WhatsApp, atau katalog toko Anda dengan mudah.">
+<style>
+  :root {
+    /* Tema Tosca Segar & Terpercaya (Ramah UMKM) */
+    --accent: #0d9488;
+    --accent-hover: #0f766e;
+    --accent-active: #115e59;
+    --accent-soft: #f0fdfa;
+    --accent-border: #99f6e4;
+    --accent-text: #ffffff;
+    --accent-glow: rgba(13, 148, 136, 0.28);
+
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --card-alt: #f1f5f9;
+    --line: #e2e8f0;
+    --text: #0f172a;
+    --muted: #475569;
+    --muted-light: #64748b;
+
+    --ok: #047857;
+    --ok-bg: #ecfdf5;
+    --ok-line: #a7f3d0;
+
+    --off: #b91c1c;
+    --off-bg: #fef2f2;
+    --off-line: #fecaca;
+
+    --warn: #b45309;
+    --warn-bg: #fffbeb;
+    --warn-line: #fde68a;
+
+    --bar: #0d9488;
+    --shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    --shadow-input: 0 2px 10px rgba(13, 148, 136, 0.08);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #14b8a6;
+      --accent-hover: #2dd4bf;
+      --accent-active: #0d9488;
+      --accent-soft: rgba(20, 184, 166, 0.12);
+      --accent-border: rgba(20, 184, 166, 0.28);
+      --accent-text: #042f2e;
+      --accent-glow: rgba(20, 184, 166, 0.35);
+
+      --bg: #090e17;
+      --card: #111827;
+      --card-alt: #161f30;
+      --line: #1f293d;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --muted-light: #64748b;
+
+      --ok: #34d399;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --ok-line: rgba(16, 185, 129, 0.3);
+
+      --off: #f87171;
+      --off-bg: rgba(239, 68, 68, 0.16);
+      --off-line: rgba(239, 68, 68, 0.3);
+
+      --warn: #fbbf24;
+      --warn-bg: rgba(245, 158, 11, 0.16);
+      --warn-line: rgba(245, 158, 11, 0.3);
+
+      --bar: #14b8a6;
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --shadow-input: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 28px 16px 64px;
+  }
+
+  /* Accessibility focus styles */
+  input:focus-visible, button:focus-visible, summary:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Header & Hero Section */
+  header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 12px;
+  }
+
+  .brand-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 8px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2.35rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    margin: 8px auto 18px;
+    max-width: 580px;
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+
+  /* Hero SVG Illustration */
+  .hero-illustration {
+    margin: 0 auto 20px;
+    max-width: 290px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-illustration svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Benefit chips */
+  .features-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .feature-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .feature-pill span {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hero {
+    border-top: 4px solid var(--accent);
+    position: relative;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.22rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .count-pill {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  /* Form & Hero Input */
+  .input-label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 16px;
+    color: var(--muted-light);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input[type=text], input[type=datetime-local] {
+    width: 100%;
+    padding: 14px 16px;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+
+  .input-with-icon {
+    padding-left: 46px !important;
+  }
+
+  input[type=text]:focus, input[type=datetime-local]:focus {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-glow);
+    background: var(--card);
+  }
+
+  /* Buttons */
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
+    padding: 9px 15px;
+    font-weight: 600;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  button:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  button:active {
+    transform: translateY(1px);
+  }
+
+  button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+  }
+
+  /* Prominent Primary Button */
+  button.primary {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 14px 26px;
+    border-radius: 12px;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px var(--accent-glow);
+  }
+
+  button.primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--accent-text);
+    box-shadow: 0 4px 14px var(--accent-glow);
+  }
+
+  button.primary:active {
+    background: var(--accent-active);
+  }
+
+  button.danger {
+    color: var(--off);
+    border-color: var(--off-line);
+    background: var(--off-bg);
+  }
+  button.danger:hover {
+    border-color: var(--off);
+    background: var(--off);
+    color: #ffffff;
+  }
+
+  /* Details / Advanced Options */
+  details {
+    margin-top: 16px;
+    border-top: 1px dashed var(--line);
+    padding-top: 14px;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:hover {
+    color: var(--accent);
+  }
+  summary .chevron {
+    transition: transform 0.2s ease;
+    display: inline-flex;
+  }
+  details[open] summary .chevron {
+    transform: rotate(180deg);
+  }
+
+  .opts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 14px;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.35;
+  }
+
+  /* Alert Message */
+  #msg {
+    min-height: 1.2em;
+    margin: 12px 0 0;
+    color: var(--off);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  #msg:not(:empty) {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--off-bg);
+    border: 1px solid var(--off-line);
+  }
+
+  /* Result Box with Smooth Entrance Animation */
+  @keyframes resultEntrance {
+    0% {
+      opacity: 0;
+      transform: translateY(-14px) scale(0.98);
+    }
+    60% {
+      transform: translateY(2px) scale(1.005);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  #result {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 12px;
+    background: var(--ok-bg);
+    border: 1.5px solid var(--ok-line);
+  }
+
+  #result:not([hidden]) {
+    animation: resultEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  #result .label {
+    font-size: 0.85rem;
+    color: var(--ok);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  #result .short {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--card);
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--ok-line);
+  }
+
+  #result a {
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.22rem;
+    word-break: break-all;
+    text-decoration: none;
+    flex: 1;
+  }
+  #result a:hover {
+    text-decoration: underline;
+  }
+
+  #result .umkm-tip {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+
+  /* Links List Section */
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li.item {
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    transition: background-color 0.15s ease;
+  }
+  li.item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .top a {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .top a:hover {
+    text-decoration: underline;
+  }
+
+  .orig {
+    color: var(--muted);
+    font-size: 0.88rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 2px 0 10px;
+    word-break: break-all;
+  }
+
+  /* Status Badges */
+  .badge {
+    font-size: 0.74rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+  }
+
+  .badge.on {
+    color: var(--ok);
+    background: var(--ok-bg);
+    border: 1px solid var(--ok-line);
+  }
+
+  .badge.off {
+    color: var(--off);
+    background: var(--off-bg);
+    border: 1px solid var(--off-line);
+  }
+
+  .badge.exp {
+    color: var(--warn);
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+  }
+
+  /* Actions Buttons */
+  .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .actions button {
+    padding: 6px 14px;
+    font-size: 0.88rem;
+    border-radius: 8px;
+    min-height: 36px;
+  }
+
+  /* Statistics Visualisation */
+  .stats {
+    margin-top: 14px;
+    padding: 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 0.88rem;
+  }
+
+  .stats-total {
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+  }
+
+  .bar-row .d {
+    width: 86px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    flex: none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bar-row .b {
+    height: 12px;
+    background: var(--bar);
+    border-radius: 6px;
+    min-width: 6px;
+    transition: width 0.3s ease;
+  }
+
+  .empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 24px 16px;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 36px;
+    color: var(--muted-light);
+    font-size: 0.84rem;
+  }
+
+  /* Responsive 360px Mobile Optimizations */
+  @media (max-width: 580px) {
+    main {
+      padding: 18px 12px 48px;
+    }
+    .card {
+      padding: 18px 14px;
+      border-radius: 12px;
+    }
+    h1 {
+      font-size: 1.85rem;
+    }
+    .hero-desc {
+      font-size: 0.92rem;
+    }
+    .row {
+      flex-direction: column;
+      gap: 10px;
+    }
+    button.primary {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 1rem;
+    }
+    .opts {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 12px;
+    }
+    #result .short {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    #result .short button {
+      width: 100%;
+    }
+    .actions {
+      width: 100%;
+    }
+    .actions button {
+      flex: 1 1 auto;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand-badge">
+      <span>🇮🇩</span> Solusi Tautan Praktis untuk UMKM
+    </div>
+    
+    <div class="brand-title">
+      <h1>Pende<span>kin</span></h1>
+    </div>
+
+    <p class="hero-desc">
+      Ringkas link katalog, WhatsApp, atau promo toko Anda jadi rapi, profesional, dan siap dibagikan ke pelanggan.
+    </p>
+
+    <!-- Hero Illustration (Inline SVG, Zero Remote Assets) -->
+    <div class="hero-illustration" aria-hidden="true">
+      <svg viewBox="0 0 320 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--accent)" />
+            <stop offset="100%" stop-color="var(--accent-hover)" />
+          </linearGradient>
+          <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.12" flood-color="#000000" />
+          </filter>
+        </defs>
+
+        <!-- Background Store Awning (UMKM Theme) -->
+        <path d="M 60 48 L 130 48 L 124 28 L 66 28 Z" fill="var(--accent)" opacity="0.9" />
+        <path d="M 74 48 C 74 54 60 54 60 48 Z" fill="var(--accent)" />
+        <path d="M 88 48 C 88 54 74 54 74 48 Z" fill="var(--card)" stroke="var(--line)" />
+        <path d="M 102 48 C 102 54 88 54 88 48 Z" fill="var(--accent)" />
+        <path d="M 116 48 C 116 54 102 54 102 48 Z" fill="var(--card)" stroke="var(--line)" />
+        <path d="M 130 48 C 130 54 116 54 116 48 Z" fill="var(--accent)" />
+
+        <!-- Phone Card Base -->
+        <rect x="52" y="44" width="86" height="92" rx="10" fill="var(--card)" stroke="var(--line)" stroke-width="2" filter="url(#cardShadow)" />
+        <!-- Phone screen mockup -->
+        <rect x="58" y="58" width="74" height="66" rx="6" fill="var(--bg)" />
+        <rect x="64" y="66" width="34" height="5" rx="2.5" fill="var(--accent)" />
+        <rect x="64" y="75" width="62" height="4" rx="2" fill="var(--line)" />
+        <rect x="64" y="82" width="48" height="4" rx="2" fill="var(--line)" />
+        <!-- Mini product badge -->
+        <rect x="64" y="92" width="62" height="24" rx="4" fill="var(--accent-soft)" stroke="var(--accent-border)" stroke-width="1" />
+        <circle cx="74" cy="104" r="5" fill="var(--accent)" />
+        <rect x="84" y="100" width="34" height="4" rx="2" fill="var(--text)" opacity="0.8" />
+        <rect x="84" y="106" width="22" height="3" rx="1.5" fill="var(--muted)" />
+
+        <!-- Connecting Link Transformation Flow -->
+        <path d="M 148 90 C 165 90, 168 90, 184 90" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" />
+        <polygon points="188,90 180,85 180,95" fill="var(--accent)" />
+
+        <!-- Right Success Short Link Badge -->
+        <g filter="url(#cardShadow)">
+          <rect x="194" y="60" width="116" height="60" rx="12" fill="var(--card)" stroke="var(--accent)" stroke-width="1.8" />
+          <circle cx="214" cy="90" r="12" fill="url(#pGrad)" />
+          <!-- Checkmark inside circle -->
+          <path d="M 210 90 L 213 93 L 218 86" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Short Link Text Preview -->
+          <rect x="232" y="81" width="64" height="6" rx="3" fill="var(--text)" />
+          <rect x="232" y="91" width="46" height="5" rx="2.5" fill="var(--accent)" />
+        </g>
+
+        <!-- Sparkles / Star accents -->
+        <path d="M 172 62 L 174 67 L 179 69 L 174 71 L 172 76 L 170 71 L 165 69 L 170 67 Z" fill="var(--accent)" opacity="0.8" />
+        <circle cx="48" cy="80" r="2.5" fill="var(--accent)" opacity="0.6" />
+        <circle cx="298" cy="46" r="3" fill="var(--accent)" opacity="0.6" />
+      </svg>
+    </div>
+
+    <div class="features-pills">
+      <div class="feature-pill"><span>⚡</span> Ringkas &amp; Cepat</div>
+      <div class="feature-pill"><span>📊</span> Pantau Statistik Klik</div>
+      <div class="feature-pill"><span>🛡️</span> Aman &amp; Tanpa Ribet</div>
+    </div>
+  </header>
+
+  <!-- Input Form Section (Elemen Paling Menonjol) -->
+  <section class="card card-hero">
+    <label for="url" class="input-label">Tautan Panjang yang Ingin Dipendekkan</label>
+    <form id="form" novalidate>
+      <div class="row">
+        <div class="input-wrapper">
+          <span class="input-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </span>
+          <input id="url" class="input-with-icon" type="text" inputmode="url" autocomplete="off" autofocus
+                 placeholder="Tempel link di sini, misal: https://toko.id/katalog-promo" aria-label="Link panjang">
+        </div>
+        <button id="go" class="primary" type="submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="13 17 18 12 13 7"></polyline>
+            <polyline points="6 17 11 12 6 7"></polyline>
+          </svg>
+          <span>Pendekin</span>
+        </button>
+      </div>
+
+      <details>
+        <summary>
+          <span class="chevron" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+          Opsi Lanjutan (Alias Kustom &amp; Masa Berlaku)
+        </summary>
+        <div class="opts">
+          <div>
+            <label for="alias">Alias Kustom (opsional)</label>
+            <input id="alias" type="text" autocomplete="off" placeholder="contoh: promo-ramadhan" maxlength="30">
+            <div class="hint">3–30 karakter: huruf, angka, tanda hubung.</div>
+          </div>
+          <div>
+            <label for="exp">Kedaluwarsa (opsional)</label>
+            <input id="exp" type="datetime-local">
+            <div class="hint">Setelah waktu ini, tautan akan otomatis tidak aktif (410).</div>
+          </div>
+        </div>
+      </details>
+
+      <p id="msg" role="alert"></p>
+    </form>
+
+    <!-- Result Banner (Animated when link is created) -->
+    <div id="result" hidden>
+      <div class="label">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        Link pendek Anda siap dibagikan!
+      </div>
+      <div class="short">
+        <a id="shortLink" target="_blank" rel="noopener"></a>
+        <button id="copyNew" type="button" aria-label="Salin link pendek">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Salin
+        </button>
+      </div>
+      <div class="umkm-tip">
+        💡 <strong>Tips UMKM:</strong> Pasang link pendek ini di bio Instagram, status WhatsApp, atau kirim langsung ke calon pembeli toko Anda.
+      </div>
+    </div>
+  </section>
+
+  <!-- My Links List Section -->
+  <section class="card">
+    <div class="card-header">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        Link Saya
+      </h2>
+      <span id="listCount" class="count-pill"></span>
+    </div>
+
+    <ul id="list"></ul>
+    <p id="empty" class="empty" hidden>
+      Belum ada link yang dibuat.<br>Ketik atau tempel link produk/katalog Anda pada formulir di atas.
+    </p>
+  </section>
+
+  <footer>
+    <p>Pendekin &bull; Solusi Tautan Ringkas Ramah UMKM Indonesia &bull; Bebas biaya &amp; praktis</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const STORE = 'pendekin_api_key';
+  let apiKey = null;
+  try { apiKey = localStorage.getItem(STORE); } catch (e) { /* storage bisa kosong/diblokir */ }
+
+  // Buat elemen tanpa innerHTML: data pengguna selalu lewat textContent (aman dari XSS).
+  function el(tag, props, children) {
+    const n = document.createElement(tag);
+    Object.entries(props || {}).forEach(([k, v]) => {
+      if (k === 'text') n.textContent = v;
+      else if (k === 'class') n.className = v;
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    });
+    (children || []).forEach((c) => n.appendChild(c));
+    return n;
+  }
+
+  async function ensureKey() {
+    if (apiKey) return;
+    const res = await fetch('/api/guest', { method: 'POST' });
+    if (!res.ok) throw new Error('Gagal menyiapkan sesi. Muat ulang halaman.');
+    apiKey = (await res.json()).api_key;
+    try { localStorage.setItem(STORE, apiKey); } catch (e) { /* abaikan */ }
+  }
+
+  async function api(path, options, retried) {
+    await ensureKey();
+    const res = await fetch(path, Object.assign({}, options, {
+      headers: { 'Content-Type': 'application/json', 'X-API-Key': apiKey },
+    }));
+    if (res.status === 401 && !retried) { // kunci lama tidak dikenal (mis. database di-reset)
+      apiKey = null;
+      try { localStorage.removeItem(STORE); } catch (e) { /* abaikan */ }
+      return api(path, options, true);
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Terjadi kesalahan, coba lagi.');
+    return data;
+  }
+
+  // "www.toko.id/x" -> "https://www.toko.id/x". Skema lain (ftp:, javascript:) dibiarkan agar ditolak server.
+  function normalizeUrl(v) {
+    v = v.trim();
+    if (!/^[a-z][a-z0-9+.-]*:/i.test(v) && /^[\w-]+(\.[\w-]+)+([\/?#:]|$)/.test(v)) return 'https://' + v;
+    return v;
+  }
+
+  async function copy(text, btn) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (e) {
+      const t = el('textarea', { style: 'position:fixed;opacity:0' });
+      t.value = text; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e2) { /* abaikan */ }
+      t.remove();
+    }
+    const old = btn.textContent;
+    btn.textContent = 'Tersalin ✓';
+    setTimeout(() => { btn.textContent = old; }, 1500);
+  }
+
+  function showMsg(text) { $('msg').textContent = text || ''; }
+
+  // ---- buat link ----
+  $('form').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    showMsg('');
+    $('result').hidden = true;
+
+    const url = normalizeUrl($('url').value);
+    if (!url) { showMsg('Tempel link yang ingin dipendekkan dulu.'); return; }
+
+    const body = { url };
+    const alias = $('alias').value.trim();
+    if (alias) body.alias = alias;
+    if ($('exp').value) body.expires_at = new Date($('exp').value).toISOString();
+
+    const btn = $('go');
+    btn.disabled = true;
+    const oldText = btn.textContent;
+    btn.textContent = 'Memproses…';
+    try {
+      const link = await api('/api/links', { method: 'POST', body: JSON.stringify(body) });
+      $('shortLink').textContent = link.short_url;
+      $('shortLink').href = link.short_url;
+      $('copyNew').onclick = () => copy(link.short_url, $('copyNew'));
+      $('result').hidden = false;
+      $('url').value = ''; $('alias').value = ''; $('exp').value = '';
+      await loadList();
+    } catch (e) {
+      showMsg(e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Pendekin';
+    }
+  });
+
+  // ---- daftar link ----
+  function status(l) {
+    if (!l.is_active) return ['Nonaktif', 'off'];
+    if (l.expires_at && new Date(l.expires_at) <= new Date()) return ['Kedaluwarsa', 'exp'];
+    return ['Aktif', 'on'];
+  }
+
+  async function showStats(code, box) {
+    if (box.childNodes.length) { box.textContent = ''; return; } // klik lagi = tutup
+    box.textContent = 'Memuat statistik…';
+    try {
+      const s = await api('/api/links/' + encodeURIComponent(code) + '/stats');
+      box.textContent = '';
+      box.appendChild(el('div', { class: 'stats-total', text: 'Total klik: ' + s.total }));
+      const rows = s.daily.slice(-14);
+      const max = Math.max.apply(null, rows.map((r) => r.count).concat([1]));
+      rows.forEach((r) => {
+        box.appendChild(el('div', { class: 'bar-row' }, [
+          el('span', { class: 'd', text: r.date }),
+          el('span', { class: 'b', style: 'width:' + Math.max(6, Math.round((r.count / max) * 60)) + '%' }),
+          el('span', { text: String(r.count) }),
+        ]));
+      });
+      if (!rows.length) box.appendChild(el('div', { class: 'hint', text: 'Belum ada data klik.' }));
+    } catch (e) {
+      box.textContent = e.message;
+    }
+  }
+
+  async function loadList() {
+    const links = await api('/api/links');
+    const ul = $('list');
+    ul.textContent = '';
+    $('empty').hidden = links.length > 0;
+    const badge = $('listCount');
+    if (badge) badge.textContent = links.length ? links.length + ' tautan' : '';
+    links.forEach((l) => {
+      const [label, cls] = status(l);
+      const stats = el('div', { class: 'stats' });
+      const copyBtn = el('button', { type: 'button', text: 'Salin' });
+      copyBtn.addEventListener('click', () => copy(l.short_url, copyBtn));
+      const actions = el('div', { class: 'actions' }, [
+        copyBtn,
+        el('button', { type: 'button', text: 'Statistik', onclick: () => showStats(l.code, stats) }),
+      ]);
+      if (l.is_active) {
+        actions.appendChild(el('button', {
+          type: 'button', class: 'danger', text: 'Nonaktifkan',
+          onclick: async () => {
+            if (!confirm('Nonaktifkan link "' + l.code + '"? Pengunjung akan melihat pesan 410.')) return;
+            try { await api('/api/links/' + encodeURIComponent(l.code) + '/deactivate', { method: 'PATCH' }); await loadList(); }
+            catch (e) { showMsg(e.message); }
+          },
+        }));
+      }
+      ul.appendChild(el('li', { class: 'item' }, [
+        el('div', { class: 'top' }, [
+          el('a', { href: l.short_url, target: '_blank', rel: 'noopener', text: l.short_url }),
+          el('span', { class: 'badge ' + cls, text: label }),
+        ]),
+        el('div', { class: 'orig', title: l.original_url, text: l.original_url }),
+        actions,
+        stats,
+      ]));
+    });
+  }
+
+  loadList().catch((e) => showMsg(e.message));
+})();
+</script>
+</body>
+</html>

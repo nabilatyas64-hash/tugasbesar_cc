@@ -127,3 +127,32 @@ describe('Statistik & kepemilikan', () => {
     expect((await api.patch('/api/links/privat/deactivate').set(KEY2)).status).toBe(404);
   });
 });
+
+describe('Akun tamu & halaman web', () => {
+  test('POST /api/guest memberi API key yang bisa langsung dipakai', async () => {
+    const { api } = buildTestApp();
+    const guest = await api.post('/api/guest');
+    expect(guest.status).toBe(201);
+    const res = await api.post('/api/links')
+      .set('X-API-Key', guest.body.api_key)
+      .send({ url: 'https://toko.id', alias: 'dari-tamu' });
+    expect(res.status).toBe(201);
+  });
+
+  test('link milik tamu tidak terlihat oleh tamu lain', async () => {
+    const { api } = buildTestApp();
+    const a = (await api.post('/api/guest')).body.api_key;
+    const b = (await api.post('/api/guest')).body.api_key;
+    await api.post('/api/links').set('X-API-Key', a).send({ url: 'https://a.com', alias: 'punya-a' });
+    const res = await api.get('/api/links').set('X-API-Key', b);
+    expect(res.body).toEqual([]);
+  });
+
+  test('GET / menampilkan halaman web', async () => {
+    const { api } = buildTestApp();
+    const res = await api.get('/');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/html/);
+    expect(res.text).toContain('Pendekin');
+  });
+});

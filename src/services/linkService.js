@@ -1,3 +1,4 @@
+const { randomBytes } = require('crypto');
 const { AppError } = require('../errors');
 const { isValidAlias, isValidUrl } = require('../utils/validators');
 const { generateCode } = require('../utils/codegen');
@@ -8,6 +9,13 @@ class LinkService {
     this.cache = cache;
     this.now = now;
     this.cacheTtl = cacheTtl;
+  }
+
+  // Akun tamu otomatis: pengguna tidak perlu login, browser menyimpan kuncinya.
+  async createGuest() {
+    const apiKey = `guest-${randomBytes(16).toString('hex')}`;
+    await this.repo.createUser({ name: 'Tamu', api_key: apiKey });
+    return { api_key: apiKey };
   }
 
   authenticate(apiKey) {
