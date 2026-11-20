@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const { AppError } = require('./errors');
 const healthRoute = require('./routes/health');
@@ -12,7 +13,17 @@ function createApp({ service, healthCheck }) {
 
   // URUTAN PENTING: /health dan /api harus sebelum /:code
   app.get('/health', healthRoute(healthCheck));
+  app.post('/api/guest', async (req, res, next) => {
+    try {
+      res.status(201).json(await service.createGuest());
+    } catch (e) {
+      next(e);
+    }
+  });
   app.use('/api/links', auth(service), linksRouter(service));
+
+  // Halaman web (public/index.html) dilayani di "/"
+  app.use(express.static(path.join(__dirname, '..', 'public')));
 
   app.get('/:code([A-Za-z0-9-]+)', async (req, res, next) => {
     try {
