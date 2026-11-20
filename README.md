@@ -5,10 +5,10 @@ Startup fiktif tautan pendek untuk pelaku UMKM. Proyek Tugas Besar 1 Komputasi A
 ## Anggota
 | Nama | Peran |
 |---|---|
-| (isi) | Tech Lead / Backend |
-| (isi) | DevOps Engineer |
-| (isi) | Container Engineer |
-| (isi) | QA Engineer & Tech Writer |
+| Nabila Adindra Estiningtyas | Tech Lead / Backend |
+| M Akbar Raihan | DevOps Engineer |
+| ⁠Athoullah Ishmatuddin | Container Engineer |
+| Nabila Adindra Estiningtyas | QA Engineer & Tech Writer |
 
 ## Stack
 Node.js 20, Express 4, MySQL 8 (Knex), Redis (cache redirect), Jest + Supertest.
@@ -48,4 +48,4 @@ npm start
 Contoh: `curl -i http://localhost:8000/demo01` -> 302.
 
 ## Alur kerja Git
-Branch `feature/<nama>` -> Pull Request -> merge ke `main` (tidak ada push langsung).
+Branch `nama/<perbaikan/pekerjaan>` -> Pull Request -> merge ke `main` (tidak ada push langsung).
